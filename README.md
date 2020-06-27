@@ -1,3 +1,5 @@
+Download: https://www.spigotmc.org/resources/telegram-reporter-reborn.80768/
+
 Description:
 This plugin allows you to monitor you server via telegram bots. and see the reports in your staff group or your private chat.
 Features:
