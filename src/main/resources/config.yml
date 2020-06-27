@@ -1,0 +1,124 @@
+#------------------------------#
+#      Telegram Reporter       #
+#------------------------------#
+#change this to true when you insert you bot token
+enable: false
+#put your bot token here
+bot_token: "Your bot token here"
+#HOW CAN I GET A CHAT_ID?
+#if you don't know how to get chat id of users and groups use this telegram bot @getidsbot
+#go and /start this bot then you can forward a message from your staff members to get their chat_id
+#also you can add this bot to your group and send /start in your group then you will receive the group chat_id in your private chat with bot
+#put your chat ids here even a group or channel
+ChatIds:
+- 12121231
+- -12312478526
+- -562358
+#---------------------------#
+#         Messages          #
+#---------------------------#
+messages:
+  no-permission: "&cYou don't have access to this command!"
+  success-report: "&bWe received your report!"
+  #this is what player receive when try to report staff member
+  cant-report-staff-member: "&cSorry! but you can't report our staff member"
+  #this is what player receive when try to report a player without reason
+  report-without-reason-error: "&cYou can't report a player without reason"
+  #this is what player receive when do /report without any args
+  report-without-player-name: "&cUsage : /report <player> <reason>"
+settings:
+  #---------------------------#
+  #       Report command      #
+  #---------------------------#
+  #should /report command be enabled?
+  enable-report: true
+  #set this to true if u don't want any notification in telegram when you receive a new report
+  disable-report-notification: false
+  #put your staff names here to prevent them to be reported
+  exempt-players:
+  - "staff1"
+  - "staff2"
+  - "staff3"
+  #should command abuse be reported?
+  #players with tr.commandabuse.bypass permission will not be reported
+  #---------------------------#
+  #       Command abuse       #
+  #---------------------------#
+  report-command-abuse:
+    enable: true
+    disable-notofication: true
+    #this option is not actually goal of this project but u can prevent this commands to be executed too
+    #you should set report command abuse enable to true if you want this option
+    #use "/" to match all commands
+    disable-command-action: false
+    disable-command-action-message: "&cWe received your abuse :)"
+    commands:
+    - "/pl"
+    - "/plugins"
+    - "/bukkit:pl"
+    - "/bukkit:plugins"
+    - "/about"
+    - "/version"
+  #---------------------------#
+  #           Chat            #
+  #---------------------------#
+  #Should server chats be sent?
+  send-in-game-chat: true
+  #send game chats without notification so there will be no more annoying notifications
+  disable-notification-in-send-chat: true
+  #if you have a big server and u just want to monitor chats with specific words you can use this option
+  #you will only receive messages which contain specific words
+  advance-send-in-game-chat:
+    #WARNING: If you want to use this option make sure that you are set send-in-game-chat to true!
+    enabled: false
+    #words are case insensitive (no difference between hack and hAcK)
+    words:
+    - "hack"
+    - "admin"
+    - "helper"
+    - "mod"
+    - "staff"
+  #---------------------------#
+  #       Command Spy         #
+  #---------------------------#
+  #this option will spy some commands like essentials social spy return something like "_NoEYEs_ : /w friend hello my friend :)"
+  #players with tr.commandspy.bypass will not be reported
+  command-spy:
+    enable: true
+    disable-notofication: true
+    commands:
+    - "/w"
+    - "/m"
+    - "/t"
+    - "/tell"
+    - "/msg"
+    - "/pm"
+    - "/r"
+  #---------------------------#
+  #          Notify           #
+  #---------------------------#
+  #with this option u can let your staff member get notify when they join the game and get login details contain ip address
+  #player names are case insensitive (no difference between A and a)
+  #if you are using bungeecord enable this option only in your lobby server
+  notify-staff:
+    enable: true
+    disable-notofication: false
+    names_and_chatids:
+    - _noeyes_:231326243
+    - SomeOneElse:123123123
+  # u can also notify several chat ids in telegram just do like this
+  # _noeyes_:231326243:-12377123123:321321321 (this will notify 231326243 , -12377123123 and 321321321 when _noeyes_ join the game)
+  #---------------------------#
+  #        players            #
+  #---------------------------#
+  #with this option you will notify when a player join or leaves the server
+  join-leave-players:
+    enable: false
+    disable-notification: true
+
+
+
+
+
+
+

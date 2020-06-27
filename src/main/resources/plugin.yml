@@ -1,0 +1,34 @@
+name: TelegramReporter
+version: 2.0
+author: peyman,Ashesh3
+main: Main.TelegramReporter.Main.TelegramReporter
+commands:
+  report:
+     description: report a playar
+     usage: /report <username> <reason>
+  trreload:
+     description: reload Telegram reporter
+     usage: /trreload
+permissions:
+  tr.*:
+    default: op
+    description: Give players with op everything by default
+    children:
+      tr.report: true
+      tr.commandspy.bypass: true
+      tr.reload: true
+      tr.commandabuse.bypass: true
+  tr.report:
+    default: true
+    description: use /report command
+  tr.commandspy.bypass:
+    default: op
+    description: bypass command spy
+  tr.reload:
+    default: op
+    description: /reload command
+  tr.commandabuse.bypass:
+    default: op
+    description: bypass command abuse
+
+
