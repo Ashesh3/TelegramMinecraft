@@ -41,7 +41,7 @@ public class TelegramReporter extends JavaPlugin {
             this.getServer().getPluginManager().registerEvents(new ChatListener(this), this);
             this.getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
             getUpdates getUpds = new getUpdates(token);
-            this.getServer().getScheduler().scheduleSyncRepeatingTask(this,getUpds,0l,10l);
+            this.getServer().getScheduler().runTaskTimerAsynchronously(this,getUpds,20l,20l);
          }
       }
    }
