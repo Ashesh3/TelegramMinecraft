@@ -1,12 +1,14 @@
 package Main.TelegramReporter.Telegram;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.Scanner;
+import org.json.simple.*;
+import org.json.simple.parser.*;
+
+import Main.TelegramReporter.Main.TelegramReporter;
+
+import org.bukkit.Bukkit;
 
 public class getUpdates extends Thread {
    private String token = null;
@@ -16,46 +18,52 @@ public class getUpdates extends Thread {
    }
 
    public void run() {
-      URL url = null;
-
+      String inline = "";
       try {
-         url = new URL(String.format("https://api.telegram.org/bot%s/getupdates", this.token));
-      } catch (MalformedURLException var9) {
-         var9.printStackTrace();
-      }
-
-      BufferedReader in = null;
-
-      try {
-         in = new BufferedReader(new InputStreamReader(url.openStream()));
-      } catch (IOException var8) {
-         var8.printStackTrace();
-      }
-
-      LinkedList lines = new LinkedList();
-
-      String readLine;
-      try {
-         while((readLine = in.readLine()) != null) {
-            lines.add(readLine);
+         URL url = new URL("https://api.telegram.org/bot" + this.token + "/getUpdates");
+         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+         conn.setRequestMethod("GET");
+         conn.connect();
+         Scanner sc = new Scanner(url.openStream());
+         while (sc.hasNext()) {
+            inline += sc.nextLine();
          }
-      } catch (IOException var10) {
-         var10.printStackTrace();
+         sc.close();
+         JSONParser parse = new JSONParser();
+         JSONObject jobj = (JSONObject) parse.parse(inline);
+         JSONArray jsonarr_1 = (JSONArray) jobj.get("result");
+         String[] whitelisted_chatids = TelegramReporter.chat_ids;
+         for (int i = 0; i < jsonarr_1.size(); i++) {
+            String chatID = (String) (((JSONObject) ((JSONObject) ((JSONObject) jsonarr_1.get(i)).get("message"))
+                  .get("chat")).get("id").toString());
+            for (int j = 0; j < whitelisted_chatids.length; j++) {
+               if (whitelisted_chatids[j].equals(chatID)) {
+
+                  if (((Object) ((JSONObject) ((JSONObject) jsonarr_1.get(i)).get("message")).get("text")) != null) {
+                     String message = "<"
+                           + (String) (((JSONObject) ((JSONObject) ((JSONObject) jsonarr_1.get(i)).get("message"))
+                                 .get("from")).get("first_name").toString())
+                           + "> "
+                           + ((String) ((JSONObject) ((JSONObject) jsonarr_1.get(i)).get("message")).get("text"));
+                     Bukkit.broadcastMessage(message);
+                  }
+                  break;
+               }
+            }
+         }
+         if(jsonarr_1.size() > 0)
+         {
+            URL url2 = new URL("https://api.telegram.org/bot" + token + "/getUpdates?offset=" + (Integer
+               .parseInt((((JSONObject) (jsonarr_1.get(jsonarr_1.size() - 1))).get("update_id").toString())) + 1));
+            HttpURLConnection conn2 = (HttpURLConnection) url2.openConnection();
+            conn2.setRequestMethod("GET");
+            conn2.connect();
+            url2.openStream();
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
       }
-
-      try {
-         in.close();
-      } catch (IOException var7) {
-         var7.printStackTrace();
-      }
-
-      Iterator var5 = lines.iterator();
-
-      while(var5.hasNext()) {
-         String line = (String)var5.next();
-         System.out.println("> " + line);
-         System.out.println("\n");
-      }
-
+      
    }
 }
