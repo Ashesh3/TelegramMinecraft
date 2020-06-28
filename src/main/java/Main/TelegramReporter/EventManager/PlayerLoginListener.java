@@ -88,7 +88,7 @@ public class PlayerLoginListener implements Listener {
    @EventHandler
    public void onPlayerLeave(PlayerQuitEvent event) {
       if (this.plugin.getConfig().getBoolean("settings.join-leave-players.enable")) {
-         String message = String.format("<b>%s left the game!</b>\n<b>Total Time Played: </b><code>%s</code>\n<b>Last Location: </b><code>%s</code>\n<b>UUID: </b><code>%s</code>", event.getPlayer().getName(), formatTime((long)(event.getPlayer().getStatistic( Statistic.PLAY_ONE_MINUTE ) * 0.05 * 1000 )), formatLocation(event.getPlayer().getLocation()), event.getPlayer().getUniqueId().toString());
+         String message = String.format("<b>%s left the game!</b>\n<b>Total Time Played: </b><code>%s</code>\n<b>Last Location: </b><code>%s</code>\n<b>Reason: </b><code>%s</code>\n<b>UUID: </b><code>%s</code>", event.getPlayer().getName(), formatTime((long)(event.getPlayer().getStatistic( Statistic.PLAY_ONE_MINUTE ) * 0.05 * 1000 )), formatLocation(event.getPlayer().getLocation()), event.getQuitMessage() ,event.getPlayer().getUniqueId().toString());
          Thread broadcast = new Thread(new BroadCast(message, TelegramReporter.chat_ids, !this.plugin.getConfig().getBoolean("settings.new-players.disable-notification")));
          broadcast.start();
       }
