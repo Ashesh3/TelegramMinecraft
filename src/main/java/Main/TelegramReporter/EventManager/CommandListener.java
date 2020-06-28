@@ -33,7 +33,6 @@ public class CommandListener implements Listener {
                if (event.getPlayer().hasPermission("tr.commandabuse.bypass")) {
                   return;
                }
-               System.out.println("INSIDE");
                text = String.format("<b>WARNING!</b>\nPlayer <code>%s</code> tried to do this: <code>%s</code>\n<b>UUID: </b><code>%s</code>", event.getPlayer().getName(), event.getMessage(),event.getPlayer().getUniqueId().toString());
                broadcast = new Thread(new BroadCast(text, TelegramReporter.chat_ids, !this.plugin.getConfig().getBoolean("settings.report-command-abuse.disable-notofication")));
                broadcast.start();
