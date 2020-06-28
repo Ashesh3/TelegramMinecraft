@@ -6,6 +6,7 @@ import Main.TelegramReporter.EventManager.ChatListener;
 import Main.TelegramReporter.EventManager.CommandListener;
 import Main.TelegramReporter.EventManager.PlayerLoginListener;
 import Main.TelegramReporter.Telegram.getMe;
+import Main.TelegramReporter.Telegram.getUpdates;
 import java.io.File;
 import java.io.IOException;
 import org.bukkit.ChatColor;
@@ -39,6 +40,8 @@ public class TelegramReporter extends JavaPlugin {
             this.getServer().getPluginManager().registerEvents(new CommandListener(this), this);
             this.getServer().getPluginManager().registerEvents(new ChatListener(this), this);
             this.getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
+            getUpdates getUpds = new getUpdates(token);
+            this.getServer().getScheduler().scheduleSyncRepeatingTask(this,getUpds,0l,10l);
          }
       }
    }
