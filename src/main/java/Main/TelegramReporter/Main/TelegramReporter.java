@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import Main.TelegramReporter.utils.DataBase;
 import Main.TelegramReporter.utils.ErrorLogger;
 
@@ -41,7 +43,12 @@ public class TelegramReporter extends JavaPlugin {
             this.getServer().getPluginManager().registerEvents(new ChatListener(this), this);
             this.getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
             getUpdates getUpds = new getUpdates(token);
-            this.getServer().getScheduler().runTaskTimerAsynchronously(this,getUpds,20l,20l);
+            new BukkitRunnable() {
+               @Override
+               public void run() {
+                  getUpds.fetch();
+               }
+           }.runTaskTimerAsynchronously(this, 10L, 10L);
          }
       }
    }

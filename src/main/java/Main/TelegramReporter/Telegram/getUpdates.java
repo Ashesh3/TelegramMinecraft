@@ -15,7 +15,7 @@ import Main.TelegramReporter.Main.TelegramReporter;
 
 import org.bukkit.Bukkit;
 
-public class getUpdates extends Thread {
+public class getUpdates{
    private String token = null;
    private static HttpClient httpClient = HttpClient.newBuilder().version(Version.HTTP_2).build();
    private static String max_update_id = "";
@@ -25,7 +25,7 @@ public class getUpdates extends Thread {
       this.token = token;
    }
 
-   public void run() {
+   public boolean fetch() {
       HttpResponse<String> response = null;
       try {
          HttpRequest request = HttpRequest.newBuilder()
@@ -35,6 +35,7 @@ public class getUpdates extends Thread {
       } catch (Exception e) {
          System.out.println("MAKE SURE YOU ARE USING JDK 11 or above!");
          e.printStackTrace();
+         return false;
       }
       try{
          String[] whitelisted_chatids = TelegramReporter.chat_ids;
@@ -54,7 +55,8 @@ public class getUpdates extends Thread {
                                           + jarr.get(0).getAsJsonObject().get("message").getAsJsonObject().get("text").getAsString();
                          if(!message.equals(last_broadcasted_msg)){
                               Bukkit.broadcastMessage(message);
-                            last_broadcasted_msg = message;
+                              last_broadcasted_msg = message;
+                              return true;
                           }
                         }
                         break;
@@ -65,6 +67,8 @@ public class getUpdates extends Thread {
          }
       }catch(Exception e){
          e.printStackTrace();
+         return false;
       }
+      return true;
    }
 }
