@@ -1,5 +1,6 @@
 name: TelegramReporter
 version: 2.1
+api-version: 1.15
 author: peyman,Ashesh3
 main: Main.TelegramReporter.Main.TelegramReporter
 commands:
