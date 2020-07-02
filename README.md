@@ -1,3 +1,5 @@
+Download: https://github.com/Ashesh3/TelegramMinecraft/releases/
+
 Description:
 This plugin allows you to monitor you server via telegram bots. and see the reports in your staff group or your private chat.
 Features:
